@@ -1,6 +1,8 @@
 [submodule "Transcendence-FE"]
 	path = Transcendence-FE
 	url = https://github.com/bitbit-Merry-go-round/Transcendence-FE.git
+	branch = develop
 [submodule "Transcendence-BE"]
 	path = Transcendence-BE
 	url = https://github.com/bitbit-Merry-go-round/Transcendence-BE.git
+	branch = develop
