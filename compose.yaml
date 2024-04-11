@@ -7,7 +7,7 @@ services:
     container_name: backend
     image: backend
     pull_policy: never
-    build: ./backend
+    build: ${BE_SRCS_PATH}/backend
     env_file:
       - .env
     depends_on:
@@ -49,7 +49,7 @@ services:
     container_name: user-manager
     image: user-manager
     pull_policy: never
-    build: ./user-manager
+    build: ${BE_SRCS_PATH}/user-manager
     env_file:
       - .env
     depends_on:
@@ -86,24 +86,47 @@ services:
       timeout: 5s
       retries: 5
 
+  # front
+  front:
+    container_name: nginx
+    image: nginx
+    pull_policy: never
+    build: ${FE_SRCS_PATH}/nginx
+    restart: always
+    ports:
+      - 8080:8080
+      - 443:443
+    volumes:
+      - fe-vol:/var/www/html/srcs
+
 networks:
   pong_net:
     driver: bridge
 
 volumes:
-  # 볼륨
+  # backend volume
   backend_db_vol:
-  users_db_vol:
-  # 바인드 마운트
   backend_vol:
     driver: local
     driver_opts:
       o: bind
       type: none
       device: ${BACKEND_VOL_PATH}
+  
+  # users_manager volume
+  users_db_vol:
   users_vol:
     driver: local
     driver_opts:
       o: bind
       type: none
       device: ${USERS_VOL_PATH}
+
+  # frontend volume
+  fe-vol:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${FRONTEND_VOL_PATH}
+    
