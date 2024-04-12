@@ -13,8 +13,8 @@ services:
     depends_on:
       backend_db:
         condition: service_healthy
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     volumes:
       - backend_vol:/var/www/django/backend/
     networks:
@@ -136,10 +136,11 @@ services:
     build: ${FE_SRCS_PATH}/nginx
     restart: always
     ports:
-      - 8080:8080
       - 443:443
     volumes:
       - fe-vol:/var/www/html/srcs
+    networks:
+      - pong_net
 
 networks:
   pong_net:
